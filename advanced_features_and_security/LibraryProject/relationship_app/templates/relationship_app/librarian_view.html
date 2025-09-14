@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librarian Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #28a745;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section-header {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 20px;
+            margin: 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .book-item, .library-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        .nav-links {
+            margin-top: 20px;
+        }
+        .nav-links a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Librarian Dashboard</h1>
+        <p>Welcome, {{ user.username }}! Manage books and libraries.</p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-header">Book Collection</h2>
+        <div class="content">
+            {% if books %}
+                <div class="book-grid">
+                    {% for book in books %}
+                    <div class="book-item">
+                        <h4>{{ book.title }}</h4>
+                        <p><strong>Author:</strong> {{ book.author.name }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No books available in the system.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-header">Library Management</h2>
+        <div class="content">
+            {% if libraries %}
+                {% for library in libraries %}
+                <div class="library-item">
+                    <h4>{{ library.name }}</h4>
+                    <p><strong>Books in library:</strong> {{ library.books.count }}</p>
+                    <a href="{% url 'library_detail' library.pk %}">View Details</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No libraries registered.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'list_books' %}">All Books</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="/admin/">Admin Panel</a>
+    </div>
+</body>
+</html>

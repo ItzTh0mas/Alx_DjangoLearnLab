@@ -1,0 +1,31 @@
+<!-- library_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Detail</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #e8f4f8; margin: 5px 0; padding: 10px; border-radius: 5px; }
+        .no-books { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>Library: {{ library.name }}</h1>
+    <h2>Books in Library:</h2>
+    {% if library.books.all %}
+        <ul>
+            {% for book in library.books.all %}
+            <li>{{ book.title }} by {{ book.author.name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-books">No books available in this library.</p>
+    {% endif %}
+    
+    <p><a href="/books/">View All Books</a> | <a href="/admin/">Go to Admin</a></p>
+</body>
+</html>
